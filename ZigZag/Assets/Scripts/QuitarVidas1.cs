@@ -8,12 +8,20 @@ public class QuitarVidas1 : MonoBehaviour
     public GameObject player;
     public int vida = 3;
     private GameObject[] corazonesVida = new GameObject[3]; 
+    public AudioClip audiopiedra;
+    private AudioSource audioSource2;
     // Start is called before the first frame update
     void Start()
     {
         corazonesVida[0] = GameObject.Find("Corazon Vida 1");
         corazonesVida[1] = GameObject.Find("Corazon Vida 2");
         corazonesVida[2] = GameObject.Find("Corazon Vida 3");
+        audioSource2 = GetComponent<AudioSource>();
+        if (audioSource2 == null)
+        {
+            audioSource2 = gameObject.AddComponent<AudioSource>();
+        }
+        audioSource2.clip = audiopiedra;
     }
 
     // Update is called once per frame
@@ -53,13 +61,15 @@ public class QuitarVidas1 : MonoBehaviour
         
     }
 
-        private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
 
         if(other.gameObject.CompareTag("Enemigo"))
         {
             vida --;
             Destroy(other.gameObject);
+            audioSource2.Play();
+            
         }
 
     }

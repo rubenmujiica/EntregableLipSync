@@ -24,10 +24,29 @@ public class BakedDataTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!bakedPlayer.isPlaying)
+        /*if(!bakedPlayer.isPlaying)
         {
             bakedPlayer.bakedData = data;
             bakedPlayer.Play();
+        }*/
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Estrella"))
+        {
+            Debug.Log("Hola");
+            bakedPlayer.bakedData = data;
+            bakedPlayer.Play();
+            
         }
+
+        if (other.gameObject.CompareTag("Enemigo"))
+        {
+            if(!bakedPlayer.isPlaying){
+            bakedPlayer.bakedData = data2;
+            bakedPlayer.Play();
+            }
+        } 
     }
 }

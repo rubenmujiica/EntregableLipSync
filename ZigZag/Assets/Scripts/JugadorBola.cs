@@ -14,11 +14,13 @@ public class JugadorBola : MonoBehaviour
     public float velocidad = 5.0f;
     public Text Contador;
     public GameObject obstaculo;
-
+    public AudioClip audioEstrella;
     private Vector3 offset;
     private float ValX, ValZ;
     private Vector3 DireccionActual;
     private int totalEstrellas = 0;
+    private AudioSource audioSource;
+    public AudioClip audioPiedra;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +28,11 @@ public class JugadorBola : MonoBehaviour
         offset = camara.transform.position - transform.position;
         CrearSueloInicial();
         DireccionActual = Vector3.forward;
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
         
     }
 
@@ -143,9 +150,13 @@ public class JugadorBola : MonoBehaviour
             totalEstrellas++;
             Contador.text = "Estrellas: " + totalEstrellas;
             Destroy(other.gameObject);
-            
+            audioSource.clip = audioEstrella;
+            audioSource.Play();
             }
-
+        else{
+            audioSource.clip = audioPiedra;
+            audioSource.Play();
+        }
         if (totalEstrellas == 12){
             SceneManager.LoadScene("Nivel3");
         }
